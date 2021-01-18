@@ -266,3 +266,95 @@
     ```
 
 ### **1.2.3 객체 그래프 탐색**
+
+-   객체에서 연관된 객체를 찾아가는 것을 객체 그래프 탐색이라고 한다.
+-   보통은 참조를 통해 객체 그래프 탐색이 이루어 진다.
+-   하지만 QUERY에에 의존적인 DAO 라면 그래프 탐색이 어느 단계에서 끝날지 QUERY에 의존적이게 된다.
+-   그렇기 때문에 코드만 보고서는 해당 객체가 가지는 참조를 통해 어느 단계까지 가능할지 알 수 없다.
+-   QUERY에 의존적인 경우 대표적으로 상황에 따라 객체를 조회하는 메소드를 여러벌 생성하게 된다.
+
+        ```java
+        memberDAO.getMember();
+        memberDAO.getMemberWithTeam();
+        memberDAO.getMemberWithOrderWithDelivery();
+        ...
+        ```
+
+**JAP와 객체 그래프**
+
+-   JPA는 연관된 객체를 사용하는 시점에 적절한 SQL을 실행한다.
+-   실제 객체를 사용하는 시점까지 데이터베이스 조회를 미루는것도 가능한다.(지연로딩)
+
+### 1.2.4 비교
+
+-   데이터베이스는 각 키를 활용해 ROW를 구분한다.
+-   객체는 동일성 비교와 동등성 비교라는 두가지 방법을 사용한다. 따라서 객체와 테이블 로우를 비교하는 방법은 차이가 있다.
+
+    ```java
+    class MemberDAO {
+        public Member getMember(String member){
+            String sql = "SELECT * FROM MEMBER WHERE MEMBER_ID = ?";
+            ...
+            // JDBC API, SQL 실행
+            return new Member(...);
+        }
+    }
+    ...
+    Member member1 = memberDAO.getMember(memberId);
+    Member member2 = memberDAO.getMember(memberId);
+
+    member1 == member2 // false
+    ```
+
+-   위 내용처럼 실제 객체를 비교하면 다른 값이 나오지만 객체 측면에서 보았을때는 동일 값이 나와야 한다.
+
+**JPA와 비교**
+
+-   JAP 같은 경우 같은 트랜잭션일 때 같은 객체가 조회되는 것을 보장한다.
+
+    ```java
+    String memberId = 100;
+    Member member1 = jpa.find(Member.class, memberId);
+    Member member2 = jpa.find(Member.class, memberId);
+
+    member1 == member2 // true
+    ```
+
+---
+
+## **1.3 JAP란 무엇인가?**
+
+-   JPA란 자바 진영의 ORM 기술 표준이다.
+-   애플리케이션과 JDBC 사이에서 동작한다.
+    ![JPA](https://lh3.googleusercontent.com/ZRbShc39h0gsy1bmuMmQWMMrG-yqDnET3JMF9SzPvMB67LBWRHxjhJeqGCjZhvzltOxJiffgI9Hci00jAAG5i9JI8IKN3GAR9_KIpKdldx4EwHyxJBfHRCj81giyV8N1jwE8uacLFidkAQfxBvB5t3MyiU6dZnepnHR6HpXwBLLoqoxOkY3rUn54Tty9hQSKnDyq7qGH0CHasHHXqZx4N5TnNjqMR082FurfZSBvHsGLR6FtKajOKgZcetkNIJPaA8QO7re7w9Sy3mOWL8XOnHMGPI_4enm2ofYUHZZcc-IQdAMdbRIx8bjhjHLIpvQG0uYVo6RxN1mtDbpeq8R5eMKnuToWC8pcLbTXB0yoD_ZgFPR2PKlYxp6VNzvouUMD4_Zrizf2u5Snme2Fo4dmguNE3l2PT8-f1S56MuhCE2JUcWKwBE2KIOkJxPrHlc2mTYsqewoIw1XqzhPnatSm9Sr4Jj2cxqXB6bUPuxvqJI918k2KZxkqmmNJLzahjGd6oRZg_2vAohyO3FIi4NdVXUoHfIn-yofWDXp66zdO2YKdT3ENsuEWAm_gMie7QifWc7unJxunbk4KArHAhJJLkFH0XcnrTjw7NjgcOO_20qzL3LglQHOMKbK2_pVEzk_VPel3ArZ45zeZivPkkuxFQjqf2ahwcOcTAVY9eNk3H2GmOmj56a_-qDMM0bIi8Jg=w1510-h448-no?authuser=0)
+
+-   ORM(Object-Relational Mapping)은 객체와 관계형 데이터베이스를 매핑한다는 말이다.
+-   ORM 프레임워크는 객체와 테이블을 매핑해서 패러다임의 불일치 문제를 개발자 대신 해결해준다.
+-   예를들면 객체를 데이터베이스에 저장할 때 객체를 마치 자바 컬렉션에 저장하듯이 ORM 프레임워크에 저장하면된다.
+    ![JPA 저장](https://lh3.googleusercontent.com/ioQFmEiVdANGKdqRMi0AULoZOmALFaCXLbDYUBI_b4C3QusYgWbKa0W3j1pb1bl4CZFydE_utJC9kNABD9ttBwWQ_K-K7c0IGC3I6UrxRsmHyiFIjyzwz-jJTA02pgGw-vKxsbIH1Awr-QnkxYmAJH6g6qgBStGPz3TSL0oo74tzUX_kvlGK4FBrWrMQZNK5ZgTkTMAT73c2fGQ4MpXVNtU6ZD1Z8Ebwfc2HEKe2AXDeydfksd9gvVCcV1j6qnEmi9HxvFsfpm-zA28qaAqHZNSlSVg55GeQ1RTcVCAFklv8NmGopGPcPHF8XxJ4pR9XHslTtumjcOjdD9YTMc5S4GPQWRYsknZ_ZHafsdxh6jwgL2b6P-gv-i2BvqDzkLoBYpspLHDlMPLNnoLQTIv7188xbdmRy3ywUSXuWuTgpdd1OJ9H2VjiHCr_UYRJWZnekW8QYrK0nCl_bJMa-pFpXVFcKEs5-KOtRx3gOQ6AbSZgOPMSFIq_R6lnRJTLEuDTIvQ1H6mZYbDkxCzwOEs5KWieTCuw65bUzLgk3ZKR2Ihrd-2-kB-QaK1GgaXrC5xGxqyyvnW6OG64vv3u3DiM9uZRwqRVBkMBfoasfnEWT-7j_XGTijqvsORR5a-pAeb0iKvIkNRP0CRw0uAtZ57jNQ5qObJP3lqByNj0BbF38A_vfKQ9UmDRHwRSiq_q64M=w1228-h403-no?authuser=0)
+
+-   자바 진영에서는 하이버네이트 프레임워크가 가장 성숙한 ORM 프레임워크로 사용되고있다.
+
+### **1.3.1 왜 JPA를 사용해야 하는가?**
+
+-   **생산성**
+    -   자바 컬렉션에 저장하듯 사용가능
+    -   반복적인 쿼리 작성 불필요
+    -   데이터베이스 설계 중심의 패러다임을 객체 설계 중심으로 역전 가능
+-   **유지보수**
+    -   SQL에 의존적인 개발은 엔티티 필드 하나만 추가해도 연관된 등록/수정/조회 모두 변경시켜야 했음
+    -   JPA를 사용하면 이러한 부분들에 리소스를 확실히 줄일 수 있음
+    -   또한 패러다임 불일치 문제를 해결하여 객체지향 언어가 가진 장점을 활용할 수 있음
+-   **패러다임의 불일치 해결**
+    -   상속, 연관관계, 객체 그래프 탐색, 비교하기등 각종 패러다임 불일치 문제를 해결해줌
+-   **성능**
+    -   애플리케이션과 데이터베이스 사이에 계층이 하나 더 있으니 최적화 관점에서 시도핼 수 있는 것들이 많다.
+    -   앞에서 말했던 것과 같이 동일 트랜잭션에서는 동일한 객체가 조회 되는것을 보장한다.
+    -   결국 여러번 조회를 할 때에도 동일한 객체면 이전 객체를 재활용 하는 방법을 사용한다.
+    -   SQL 기반 언어라면 동일 객체라도 호출 횟수만큼 쿼리가 동작한다.
+-   **데이터 접근 추상화와 벤더 독립성**
+    -   관계형 데이터베이스는 벤더마다 사용법이 다른 경우가 있다.
+    -   결국 애플리케이션은 처음 선택한 데이터베이스 기술에 종속되고 다른 데이터베이스로 변경하기가 매우 어렵다.
+    -   JPA는 데이터베이스와 애플리케이션 사이에 추상화된 데이터 접근 계층을 제공해서 특정 기술에 종속되지 않도록 한다.
+-   **표준**
+    -   JPA는 자바 진영의 ORM 기술 표준이다.
