@@ -22,3 +22,49 @@
 -   persist 메소드는 단순히 엔티티를 저장한다고 표현하기 보다는, **'엔티티 매니저를 사용해서 회원 엔티티를 영속성 컨텍스트에 저장 한다'** 가 더 정확한 말이다.
 -   영속성 컨텍스트는 논리적 개념에 가깝다.
 -   영속성 컨텍스트는 엔티티 매니저를 생성할 때 하나 만들어진다. 그리고 그 엔티티 매니저는 영속성 컨택스트에 접근할 수 있고, 영속성 컨텍스트를 관리할 수 있다.
+
+## **3.3 엔티티의 생명 주기**
+
+![생명주기](https://lh3.googleusercontent.com/iXRwZ_0Drs_I7kHbiz2gkPkvycIs8diRT-HPW0S-SvxzU1Z-skl7SaIqqrRgYsmSn5xZ8hzD19MwLye44PvR-XHicn3b4fIg7jD1euTl8JJOP_Jv0u-8KR8PLwxKCbEEPQ5zcwslkYJ0cQWYKzgdKtBtdB9YWz3Vfk_yQjafh9krS_zvJoeEVHP9IlL-KlkRhLuTZ9gsyyX6NRMlyLP-U46viOpx8WOP5fS0dunLCoY-ATMnm_IowSk3EXISlwiye3_bnTcBVUDFRa2bVuFyi_k5wv0zqi6Rc2H_EkhDW1X2Smx392lsC5ZHOVIzg8VGKIl0ZTI8wgnW1_313JvqMe-3T97FXaZsGGcntB8R103hr9YROCPywejpdZL3rWeeXr0p860is0MwV2JPXYQP5SPBSv7tVkkaN51NhCx6Lonm9KEzZ3U9PJcpFLfsHOb2WDOxmYoB-75h0jKmS_ugrw_oNI8kLxw40kK8KA18SjZCPr5lNMznS2JxQR5PMJZIFbiYUvQq5_9o01qHM5dVUsBbuGfBDHmMfwgPabGOgDRY-8YcjUrGzE0VUwa-lgyILGbgL5JSV7ZiupaHFA4514sA7sFCQUQxIUObRBF2MxL88v-oS92wbXhJeBBKwG8GPBwTZ0bxVB-e7Qgkeb0GjMdOZ-Z7w19XEtX5JW2RB0UVVF-Y2wADfVhkuXStgqs=w779-h630-no?authuser=0)
+
+-   엔티티에는 4가지 상태가 존재한다.
+    1. 비영속(new/transient) : 영속성 컨텍스트와 전혀 관계가 없는 상태
+    2. 영속(managed) : 영속성 컨텍스트에 저장된 상태
+    3. 준영속(detached) : 영속성 컨텍스트에 저장되었다가 분리된 상태
+    4. 삭제(removed) : 삭제된 상태
+
+**비영속**
+
+-   엔티티 객체를 생성하였고, 순수한 객체 상태이다.
+-   영속성 컨텍스트나 데이터베이스와는 전혀 관련이 없다.
+    ```java
+    // 객체를 생성한 상태
+    Member member = new Member();
+    member.setId("membeer1");
+    member.setUsername("demo");
+    ```
+
+**영속**
+
+-   영속성 컨텍스트가 관리하는 엔티티를 영속 상태라고 한다.
+-   영속성 컨텍스트에 의해 관리된다는 뜻
+-   em.find()나 JPQL을 사용한 조회 / 엔티티 매니저를 통한 저장 했을때 영속 상태가 된다.
+    ```java
+    em.persist(member);
+    ```
+
+**준영속**
+
+-   영속 상태의 엔티티를 영속성 컨텍스트가 관리하지 않으면 준 영속 상태가 된다.
+-   준영속 상태로 만드려면 em.detach() 메서드를 호출한다.
+-   em.close() 를 호출해 영속성 컨텍스트를 닫거나, em.clear()를 호출해서 영속성 컨텍스트를 초기화해도 준영속 상태가 된다.
+    ```java
+    em.detach(member);
+    ```
+
+**삭제**
+
+-   엔티티를 영속성 컨텍스트와 데이터베이스에서 삭제한다.
+    ```java
+    em.remove(member);
+    ```
