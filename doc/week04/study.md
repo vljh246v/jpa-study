@@ -66,7 +66,7 @@
 - 아래 옵션을 persistence.xml에 추가하면 **애플리케이션 실행 시점에 데이터베이스 테이블을 자동으로 생성한다.**
 
   ```xml
-  <property name="hibernate.hdm2ddl.auto" value="create"/>
+  <property name="hibernate.hbm2ddl.auto" value="create"/>
   ```
 
 - 콘솔에 sql을 출력하기 위해서 아래 속성을 true로 설정하면 된다.
@@ -86,5 +86,7 @@
 - 운영 환경에서는 hibernate.hdm2ddl.auto 속성중 DDL이 실행되는 환경은 만들면 안된다.
 
 ## **4.5 DDL 생성 기능**
-
+- 위 예제에서 추가로 회원 이름 필수와 10자 초과 금지라는 제약조건이 추가되었다.
+- 스키마 자동 생성하기를 통해 만들어지는 DDL에 제약조건을 추가 할 수 있다.
+- 
 
