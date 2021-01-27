@@ -57,6 +57,6 @@ public class JpaMain {
     System.out.println("member.size=" + members.size());
 
     // 삭제
-    em.remove(members);
+    em.remove(findMember);
   }
 }
