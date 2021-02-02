@@ -23,9 +23,9 @@ public class Main {
     try{
       tx.begin();
       saveMember(em);
-      queryLogicJoin(em);
-      updateRelation(em);
-      removeTeam(em);
+//      queryLogicJoin(em);
+//      updateRelation(em);
+//      removeTeam(em);
 
       tx.commit();
 
@@ -58,7 +58,7 @@ public class Main {
   }
 
   private static void queryLogicJoin(EntityManager em) {
-    String jpql = "select m from Member m join m.team t where " +
+    String jpql = "select m from Member2 m join m.team t where " +
         "t.name=:teamName";
 
     List<Member> resultList = em.createQuery(jpql, Member.class)
