@@ -1,6 +1,5 @@
 package com.demo.jpastudy.ch06;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,16 +9,18 @@ import javax.persistence.Id;
 @Entity
 public class Member {
 
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "MEMBER_ID")
   private Long id;
   private String username;
 
-  public Member(String username){
+  public Member(String username) {
     this.username = username;
   }
 
-  public Member(){}
+  public Member() {
+  }
 
   public Long getId() {
     return id;
