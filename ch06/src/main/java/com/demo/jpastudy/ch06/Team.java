@@ -23,8 +23,7 @@ public class Team {
   @JoinColumn(name = "TEAM_ID")
   private List<Member> members = new ArrayList<>();
 
-  public Team(Long id, String name){
-    this.id = id;
+  public Team(String name){
     this.name = name;
   }
 
