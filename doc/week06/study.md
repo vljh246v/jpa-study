@@ -197,3 +197,27 @@
 -   일대다 양방향 매핑은 존재하지 않는다.
 -   정확히는 양방향 매핑에서 @OneToMany 는 연관관계의 주인이 될 수 없다.
 -   이러한 이유로 @ManyToOne 에는 mappedBy 속성이 없다.
+-   하지만 일대다 단방향 매핑 반대편에 외래 키를 사용하는 다대일 단방향 매핑을 읽기 전용으로 하나 추가하면 된다.
+
+    ![일대다 양방향](https://lh3.googleusercontent.com/pw/ACtC-3fu0tJahTz5dVzjy5NK8pikFUGMXBpj4US0AP0R3I7FV4Z8cZdK5_EmpWmO-FnY76pYZgz16Rz5VPEn5r2HXTPkf6wBWg1YF772-vS4OsPnMNquh62aSFmleD8L0kjAPleWpAF3hNASCvkowNS-oQQ6-A=w1003-h501-no?authuser=0)
+
+    ```java
+    public class Member {
+
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "MEMBER_ID")
+        private Long id;
+
+        private String username;
+
+        @ManyToOne
+        @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
+        private Team team;
+    }
+    ```
+
+-   이렇게 되면 둘다 동일한 키를 관리하여서 문제가 발생할 수 있다.
+-   반대편인 다대일 쪽은 insertable = false, updatable = false 설정을 해준다.
+-   하지만 이 설정은 일대다 양방향 이라기보다, 일대다 단방향 매핑 반대편에 다대일 단방향 매핑을 읽기 전용으로 추가한 것이다.
+-   여전히 update 문제는 그대로 가지고 있다.
