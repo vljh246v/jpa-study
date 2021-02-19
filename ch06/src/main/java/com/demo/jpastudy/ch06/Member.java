@@ -24,8 +24,7 @@ public class Member {
 
   private String username;
 
-  @OneToOne
-  @JoinColumn(name = "LOCKER_ID")
+  @OneToOne(mappedBy = "member")
   private Locker locker;
 
   @ManyToOne
