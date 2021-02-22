@@ -13,7 +13,7 @@ import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+//@Entity
 @Table(name = "ORDERS")
 @Getter @Setter
 public class Order {

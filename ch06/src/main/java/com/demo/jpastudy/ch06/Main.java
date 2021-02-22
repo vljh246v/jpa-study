@@ -20,11 +20,14 @@ public class Main {
     try{
       tx.begin();
 
-      saveMember(em);
+      save(em);
+
 
       tx.commit();
 
     } catch (Exception e){
+      System.out.println("=====================================");
+      System.out.println(e.getMessage());
       tx.rollback();
     }finally {
       em.close();
@@ -32,18 +35,24 @@ public class Main {
     emf.close();
   }
 
-  private static void saveMember(EntityManager em) {
-    Member member1 = new Member("member1");
-    Member member2 = new Member("member2");
+  private static void save(EntityManager em) {
 
-    Team team1 = new Team("team1");
-    team1.getMembers().add(member1);
-    team1.getMembers().add(member2);
 
-    em.persist(member1); // INSERT-member1
-    em.persist(member2); // INSERT-member2
-    em.persist(team1); // INSERT-team1, UPDATE-member1.fk, UPDATE-member2.fk
+    Member member1 = new Member();
+    member1.setId(1L);
+    member1.setUsername("회원1");
+    em.persist(member1);
+
+
+    Product productA = new Product();
+    productA.setId(1L);
+    productA.setName("상품 A");
+    em.persist(productA);
+
+    MemberProduct memberProduct = new MemberProduct();
+    memberProduct.setMember(member1);
+    memberProduct.setProduct(productA);
+    memberProduct.setOrderAmount(2);
+    em.persist(memberProduct);
   }
-
-
 }

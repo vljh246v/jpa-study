@@ -18,7 +18,7 @@ import javax.persistence.UniqueConstraint;
  * User: HolyEyE
  * Date: 13. 5. 24. Time: 오후 7:43
  */
-@Entity
+//@Entity
 @Table(name="MEMBER", uniqueConstraints = {@UniqueConstraint(
     name = "NAME_AGE_UNIQUE",
     columnNames = {"NAME", "AGE"}

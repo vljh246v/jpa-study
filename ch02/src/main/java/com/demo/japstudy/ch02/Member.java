@@ -9,7 +9,7 @@ import javax.persistence.Table;
  * User: HolyEyE
  * Date: 13. 5. 24. Time: 오후 7:43
  */
-@Entity
+//@Entity
 @Table(name="MEMBER")
 public class Member {
 

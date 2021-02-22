@@ -28,18 +28,8 @@ public class Member {
 
   private String username;
 
-  @ManyToMany
-  @JoinTable(name = "MEMBER_PRODUCT", joinColumns = @JoinColumn(name = "MEMBER_ID"),
-      inverseJoinColumns = @JoinColumn(name =
-          "PRODUCT_ID"))
-  private List<Product> products = new ArrayList<>();
-
-  @OneToOne(mappedBy = "member")
-  private Locker locker;
-
-  @ManyToOne
-  @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
-  private Team team;
+  @OneToMany(mappedBy = "member")
+  private List<MemberProduct> memberProducts;
 
   public Member(String username) {
     this.username = username;
@@ -47,4 +37,5 @@ public class Member {
 
   public Member() {
   }
+
 }

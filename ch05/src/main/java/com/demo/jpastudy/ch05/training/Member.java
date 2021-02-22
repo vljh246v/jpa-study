@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+//@Entity
 @Setter
 @Getter
 public class Member {
