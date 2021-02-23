@@ -1,30 +1,34 @@
 package com.demo.jpastudy.ch06;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
-@NoArgsConstructor
 @Setter
-public class Product {
+@NoArgsConstructor
+public class Order {
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "PRODUCT_ID")
+  @Column(name = "ORDER_ID")
   private Long id;
 
-  @OneToMany(mappedBy = "product")
-  List<Order> orders = new ArrayList<>();
+  @ManyToOne
+  @JoinColumn(name = "MEMBER_ID")
+  private Member member;
 
-  private String name;
+  @ManyToOne
+  @JoinColumn(name = "PRODUCT_ID")
+  private Product product;
+
+  private int orderAmount;
 }

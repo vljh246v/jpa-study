@@ -26,6 +26,7 @@ public class Main {
       tx.commit();
 
     } catch (Exception e){
+      e.printStackTrace();
       System.out.println("=====================================");
       System.out.println(e.getMessage());
       tx.rollback();
@@ -37,22 +38,14 @@ public class Main {
 
   private static void save(EntityManager em) {
 
-
     Member member1 = new Member();
     member1.setId(1L);
     member1.setUsername("회원1");
     em.persist(member1);
 
+    Product product = new Product();
 
-    Product productA = new Product();
-    productA.setId(1L);
-    productA.setName("상품 A");
-    em.persist(productA);
 
-    MemberProduct memberProduct = new MemberProduct();
-    memberProduct.setMember(member1);
-    memberProduct.setProduct(productA);
-    memberProduct.setOrderAmount(2);
-    em.persist(memberProduct);
+
   }
 }
