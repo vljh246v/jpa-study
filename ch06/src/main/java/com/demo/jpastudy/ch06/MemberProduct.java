@@ -1,6 +1,7 @@
 package com.demo.jpastudy.ch06;
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -10,18 +11,18 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@IdClass(MemberProductId.class)
 @Setter
 @Getter
+@IdClass(MemberProductId.class)
 public class MemberProduct {
 
   @Id
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.MERGE)
   @JoinColumn(name = "MEMBER_ID")
   private Member member;
 
   @Id
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.MERGE)
   @JoinColumn(name = "PRODUCT_ID")
   private Product product;
 
