@@ -20,7 +20,7 @@ public class Main {
     try{
       tx.begin();
 
-      save(em);
+//      save(em);
 
 
       tx.commit();
