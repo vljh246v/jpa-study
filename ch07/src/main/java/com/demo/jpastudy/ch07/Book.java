@@ -2,6 +2,7 @@ package com.demo.jpastudy.ch07;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @DiscriminatorValue("B")
+@PrimaryKeyJoinColumn(name = "BOOK_ID")
 public class Book extends Item{
 
   private String author; // 작가
