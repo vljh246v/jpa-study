@@ -12,7 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @DiscriminatorValue("B")
-@PrimaryKeyJoinColumn(name = "BOOK_ID")
 public class Book extends Item{
 
   private String author; // 작가
