@@ -21,21 +21,16 @@ public class Main {
       tx.begin();
 
       Parent parent = new Parent();
-      parent.setId1("myId1");
-      parent.setId2("myId2");
+      ParentId parentId = new ParentId("myId1", "myId2");
+      parent.setId(parentId);
       parent.setName("parentName");
       em.persist(parent);
 
-
-      ParentId parentId = new ParentId("myId1", "myId2");
       Parent resultParent = em.find(Parent.class, parentId);
 
-      System.out.println("=====================================");
-      System.out.println("parent : " + parent);
-      System.out.println("parent.getName() : " + parent.getName());
-      System.out.println("=====================================");
-      System.out.println("resultParent : " + resultParent);
-      System.out.println("resultParent.getName() : " + resultParent.getName());
+      System.out.println("--------------------------");
+      System.out.println(parent);
+      System.out.println(resultParent);
       tx.commit();
 
     } catch (Exception e){
