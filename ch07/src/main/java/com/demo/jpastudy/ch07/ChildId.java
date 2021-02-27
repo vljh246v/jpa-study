@@ -22,5 +22,4 @@ public class ChildId implements Serializable {
 
   @Column(name = "CHILD_ID")
   private String childId;
-
 }

@@ -17,7 +17,6 @@ import lombok.Setter;
 @Embeddable
 public class GrandChildId implements Serializable {
 
-
   private ChildId childId;
 
   @Column(name = "GRANDCHILD_ID")
