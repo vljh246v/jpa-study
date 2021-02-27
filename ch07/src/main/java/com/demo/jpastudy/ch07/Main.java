@@ -20,17 +20,6 @@ public class Main {
     try{
       tx.begin();
 
-      Parent parent = new Parent();
-      ParentId parentId = new ParentId("myId1", "myId2");
-      parent.setId(parentId);
-      parent.setName("parentName");
-      em.persist(parent);
-
-      Parent resultParent = em.find(Parent.class, parentId);
-
-      System.out.println("--------------------------");
-      System.out.println(parent);
-      System.out.println(resultParent);
       tx.commit();
 
     } catch (Exception e){

@@ -7,25 +7,21 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @Entity
-@IdClass(ChildId.class)
-public class Child {
+@IdClass(GrandChildId.class)
+public class GrandChild {
 
   @Id
   @ManyToOne
-  @JoinColumn(name = "PARENT_ID")
-  private Parent parent;
+  @JoinColumns({
+      @JoinColumn(name = "PARENT_ID"),
+      @JoinColumn(name = "CHILD_ID")
+  })
+  private Child child;
 
-  @Id @Column(name = "CHILD_ID")
-  private String childId;
+  @Id @Column(name = "GRANDCHILD_ID")
+  private String id;
 
   private String name;
 }
-

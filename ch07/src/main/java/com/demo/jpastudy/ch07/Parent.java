@@ -16,8 +16,8 @@ import lombok.Setter;
 @Entity
 public class Parent {
 
-  @EmbeddedId
-  private ParentId id;
+  @Id @Column(name = "PARENT_ID")
+  private String id;
 
   private String name;
 }
