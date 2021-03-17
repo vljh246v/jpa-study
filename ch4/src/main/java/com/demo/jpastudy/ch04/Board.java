@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.TableGenerator;
 
-@Entity
+//@Entity
 //@SequenceGenerator(
 //    name = "BOARD_SEQ_GENERATOR",
 //    sequenceName = "BOARD_SEQ",

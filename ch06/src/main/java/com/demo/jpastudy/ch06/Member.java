@@ -1,4 +1,4 @@
-package com.demo.jpastudy.ch05.training;
+package com.demo.jpastudy.ch06;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,23 +9,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@Entity
-@Setter
+@Entity
 @Getter
+@Setter
+@NoArgsConstructor
 public class Member {
 
-  @Id @Column(name = "MEMBER_ID")
-  @GeneratedValue(strategy= GenerationType.AUTO)
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "MEMBER_ID")
   private Long id;
 
-  private String name;
+  private String username;
 
-  private String city;
-  private String street;
-  private String zipcode;
-
-  @OneToMany(mappedBy="member")
+  @OneToMany(mappedBy = "member")
   private List<Order> orders = new ArrayList<>();
+
+
 }

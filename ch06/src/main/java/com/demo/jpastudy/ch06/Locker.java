@@ -1,24 +1,25 @@
-package com.demo.jpastudy.ch04.training;
+package com.demo.jpastudy.ch06;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@Entity
+@Entity
 @Getter
 @Setter
-public class Member {
+@NoArgsConstructor
+public class Locker {
 
-  @Id
-  @GeneratedValue
-  @Column(name = "MEMBER_ID")
+  @Id @GeneratedValue
+  @Column(name = "LOCKER_ID")
   private Long id;
 
+
   private String name;
-  private String city;
-  private String street;
-  private String zipcode;
 }
